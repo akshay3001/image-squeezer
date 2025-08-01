@@ -1,10 +1,17 @@
 # ImageSqueezer ✨
 
+[![Live Demo](https://img.shields.io/badge/Demo-Live-green)](https://image-squeezer.vercel.app/)
+[![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Privacy First](https://img.shields.io/badge/Privacy-First-brightgreen)](https://image-squeezer.vercel.app)
+
 ImageSqueezer is a fast, free, and private client-side image compressor. It allows you to shrink JPG and PNG images to common web-friendly sizes directly in your browser. Since no data is ever uploaded to a server, your images remain completely private.
 
 This project is built with simplicity in mind, using only HTML, Tailwind CSS, and vanilla JavaScript.
 
-Live - https://image-squeezer.vercel.app/
+
+## 🚀 Live Demo
+
+Try ImageSqueezer now: **[https://image-squeezer.vercel.app/](https://image-squeezer.vercel.app/)**
 
 ***
 
@@ -16,16 +23,16 @@ Live - https://image-squeezer.vercel.app/
 -   **🎯 Target Size Compression**: Choose from common target sizes (e.g., 25KB, 50KB, 100KB) perfect for web forms and uploads.
 -   **📝 Smart Naming**: Compressed files are automatically named `original-name-50kb.jpg`.
 -   **📱 Fully Responsive**: Works beautifully on both desktop and mobile devices.
+-   - **♿ Accessible** - Built with web accessibility in mind
 
 ***
 
-## How to Use
+## 🔧 How It Works
 
-Since ImageSqueezer is a single-file application, using it is incredibly simple:
-
-1.  Download the `index.html` file from this repository.
-2.  Open the file in any modern web browser (like Chrome, Firefox, or Edge).
-3.  That's it! You can now start compressing images.
+1. **Select Image** - Choose a JPG or PNG file (up to 5MB)
+2. **Pick Target Size** - Select your desired compression level
+3. **Compress** - Watch the magic happen in real-time
+4. **Download** - Get your optimized image instantly
 
 ***
 

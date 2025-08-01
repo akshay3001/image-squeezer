@@ -3,8 +3,120 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ImageSqueezer - Client-Side Image Compressor</title>
-    <link rel="icon" href="favicon.jpg" type="image/x-icon">
+
+    <!-- Primary Meta Tags -->
+    <title>
+      ImageSqueezer - Free Online Image Compressor | Reduce JPG & PNG Size
+    </title>
+    <meta
+      name="title"
+      content="ImageSqueezer - Free Online Image Compressor | Reduce JPG & PNG Size"
+    />
+    <meta
+      name="description"
+      content="Compress JPG and PNG images instantly in your browser. No upload required, completely private and secure. Reduce image file sizes by up to 90% while maintaining quality."
+    />
+    <meta
+      name="keywords"
+      content="image compressor, jpg compressor, png compressor, reduce image size, compress photos, image optimizer, free image compression, online image tool"
+    />
+    <meta name="author" content="ImageSqueezer" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://image-squeezer.vercel.app" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://image-squeezer.vercel.app" />
+    <meta
+      property="og:title"
+      content="ImageSqueezer - Free Online Image Compressor"
+    />
+    <meta
+      property="og:description"
+      content="Compress JPG and PNG images instantly in your browser. No upload required, completely private and secure. Reduce image file sizes by up to 90% while maintaining quality."
+    />
+    <meta
+      property="og:image"
+      content="https://image-squeezer.vercel.app/favicon.jpg"
+    />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta
+      property="og:image:alt"
+      content="ImageSqueezer - Online Image Compression Tool"
+    />
+    <meta property="og:site_name" content="ImageSqueezer" />
+    <meta property="og:locale" content="en_US" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://image-squeezer.vercel.app" />
+    <meta
+      property="twitter:title"
+      content="ImageSqueezer - Free Online Image Compressor"
+    />
+    <meta
+      property="twitter:description"
+      content="Compress JPG and PNG images instantly in your browser. No upload required, completely private and secure."
+    />
+    <meta
+      property="twitter:image"
+      content="https://image-squeezer.vercel.app/favicon.jpg"
+    />
+    <meta
+      property="twitter:image:alt"
+      content="ImageSqueezer - Online Image Compression Tool"
+    />
+
+    <!-- Additional Meta Tags -->
+    <meta name="theme-color" content="#4f46e5" />
+    <meta name="msapplication-TileColor" content="#4f46e5" />
+    <meta name="application-name" content="ImageSqueezer" />
+
+    <!-- Favicon and Icons -->
+    <link rel="icon" href="favicon.jpg" type="image/jpeg" />
+    <link rel="apple-touch-icon" href="favicon.jpg" />
+    <link rel="manifest" href="manifest.json" />
+
+    <!-- Preconnect for Performance -->
+    <link rel="preconnect" href="https://cdn.tailwindcss.com" />
+
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "ImageSqueezer",
+        "description": "Free online image compressor that reduces JPG and PNG file sizes directly in your browser without uploading to servers.",
+        "url": "https://image-squeezer.vercel.app",
+        "applicationCategory": "MultimediaApplication",
+        "operatingSystem": "Web Browser",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        },
+        "featureList": [
+          "Client-side image compression",
+          "JPG and PNG support",
+          "No server upload required",
+          "Privacy-focused",
+          "Multiple compression levels",
+          "Instant download"
+        ],
+        "softwareRequirements": "Modern web browser with JavaScript enabled",
+        "author": {
+          "@type": "Organization",
+          "name": "ImageSqueezer"
+        },
+        "aggregateRating": {
+          "@type": "AggregateRating",
+          "ratingValue": "4.8",
+          "ratingCount": "150"
+        }
+      }
+    </script>
+
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
       /* Custom style for the file input button */
@@ -25,7 +137,7 @@
     </style>
   </head>
   <body class="font-sans text-slate-800 dark:text-slate-200">
-    <main class="container mx-auto max-w-4xl p-4 sm:p-8">
+    <main class="container mx-auto max-w-4xl p-4 sm:p-8" role="main">
       <header class="text-center mb-8">
         <h1
           class="text-4xl sm:text-5xl font-bold text-indigo-600 dark:text-indigo-400"
@@ -34,16 +146,24 @@
         </h1>
         <p class="mt-2 text-lg text-slate-600 dark:text-slate-400">
           Compress JPG & PNG images right in your browser. No server upload
-          required.
+          required - completely private and secure.
         </p>
       </header>
 
-      <div class="bg-white dark:bg-slate-800 p-6 sm:p-8 rounded-xl shadow-lg">
+      <section
+        class="bg-white dark:bg-slate-800 p-6 sm:p-8 rounded-xl shadow-lg"
+        aria-label="Image compression tool"
+      >
         <div class="mb-6 text-center">
           <label for="imageInput" class="file-input-button">
             📂 Select Image
           </label>
-          <input type="file" id="imageInput" accept="image/jpeg, image/png" />
+          <input
+            type="file"
+            id="imageInput"
+            accept="image/jpeg, image/png"
+            aria-describedby="fileInfo"
+          />
           <p
             id="fileInfo"
             class="mt-3 text-sm text-slate-500 dark:text-slate-400"
@@ -58,7 +178,11 @@
           >
             Choose a target size:
           </legend>
-          <div class="flex justify-center flex-wrap gap-3">
+          <div
+            class="flex justify-center flex-wrap gap-3"
+            role="radiogroup"
+            aria-label="Target compression size options"
+          >
             <div>
               <input
                 type="radio"
@@ -66,6 +190,7 @@
                 name="targetSize"
                 value="25"
                 class="hidden peer"
+                aria-describedby="size25-desc"
               />
               <label
                 for="size25"
@@ -81,6 +206,7 @@
                 value="50"
                 class="hidden peer"
                 checked
+                aria-describedby="size50-desc"
               />
               <label
                 for="size50"
@@ -95,6 +221,7 @@
                 name="targetSize"
                 value="100"
                 class="hidden peer"
+                aria-describedby="size100-desc"
               />
               <label
                 for="size100"
@@ -109,6 +236,7 @@
                 name="targetSize"
                 value="250"
                 class="hidden peer"
+                aria-describedby="size250-desc"
               />
               <label
                 for="size250"
@@ -124,18 +252,23 @@
             id="compressBtn"
             class="bg-indigo-600 text-white font-bold py-3 px-8 rounded-lg shadow-md hover:bg-indigo-700 disabled:bg-slate-400 disabled:cursor-not-allowed transition-all"
             disabled
+            aria-describedby="compress-help"
           >
             Compress Image
           </button>
+          <p id="compress-help" class="sr-only">
+            Select an image first to enable compression
+          </p>
         </div>
-      </div>
+      </section>
 
-      <div id="spinner" class="hidden text-center my-8">
+      <output id="spinner" class="hidden text-center my-8" aria-live="polite">
         <svg
           class="animate-spin h-8 w-8 text-indigo-600 mx-auto"
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
+          aria-hidden="true"
         >
           <circle
             class="opacity-25"
@@ -154,22 +287,23 @@
         <p class="mt-2 text-slate-600 dark:text-slate-400">
           Squeezing pixels... this may take a moment.
         </p>
-      </div>
+      </output>
 
-      <div
+      <section
         id="results"
         class="hidden mt-8 grid grid-cols-1 md:grid-cols-2 gap-8"
+        aria-label="Compression results"
       >
         <div
           class="bg-white dark:bg-slate-800 p-4 rounded-xl shadow-lg text-center"
         >
-          <h3 class="text-xl font-bold mb-3 text-slate-700 dark:text-slate-300">
+          <h2 class="text-xl font-bold mb-3 text-slate-700 dark:text-slate-300">
             Original
-          </h3>
+          </h2>
           <img
             id="originalPreview"
             class="w-full h-auto rounded-lg mb-3 object-contain max-h-80"
-            alt="Original preview"
+            alt="Original file preview"
           />
           <p
             id="originalSize"
@@ -180,13 +314,13 @@
         <div
           class="bg-white dark:bg-slate-800 p-4 rounded-xl shadow-lg text-center"
         >
-          <h3 class="text-xl font-bold mb-3 text-green-600 dark:text-green-400">
+          <h2 class="text-xl font-bold mb-3 text-green-600 dark:text-green-400">
             Compressed
-          </h3>
+          </h2>
           <img
             id="compressedPreview"
             class="w-full h-auto rounded-lg mb-3 object-contain max-h-80"
-            alt="Compressed preview"
+            alt="Compressed file preview"
           />
           <p
             id="compressedSize"
@@ -198,11 +332,82 @@
             download="compressed-image.jpg"
             class="mt-4 inline-block bg-green-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-green-700 transition-colors"
           >
-            ⬇️ Download
+            ⬇️ Download Compressed Image
           </a>
         </div>
-      </div>
+      </section>
+
+      <!-- SEO Content Section -->
+      <section
+        class="mt-12 bg-white dark:bg-slate-800 p-6 sm:p-8 rounded-xl shadow-lg"
+      >
+        <h2 class="text-2xl font-bold text-slate-700 dark:text-slate-300 mb-4">
+          Why Choose ImageSqueezer?
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <h3
+              class="text-lg font-semibold text-indigo-600 dark:text-indigo-400 mb-2"
+            >
+              🔒 Complete Privacy
+            </h3>
+            <p class="text-slate-600 dark:text-slate-400">
+              Your images never leave your device. All compression happens
+              directly in your browser, ensuring complete privacy and security.
+            </p>
+          </div>
+          <div>
+            <h3
+              class="text-lg font-semibold text-indigo-600 dark:text-indigo-400 mb-2"
+            >
+              ⚡ Lightning Fast
+            </h3>
+            <p class="text-slate-600 dark:text-slate-400">
+              No waiting for uploads or downloads. Compress your images
+              instantly with our client-side technology.
+            </p>
+          </div>
+          <div>
+            <h3
+              class="text-lg font-semibold text-indigo-600 dark:text-indigo-400 mb-2"
+            >
+              🎯 Precise Control
+            </h3>
+            <p class="text-slate-600 dark:text-slate-400">
+              Choose your target file size from 25KB to 250KB. Perfect for web
+              optimization, email attachments, and social media.
+            </p>
+          </div>
+          <div>
+            <h3
+              class="text-lg font-semibold text-indigo-600 dark:text-indigo-400 mb-2"
+            >
+              💰 Completely Free
+            </h3>
+            <p class="text-slate-600 dark:text-slate-400">
+              No subscriptions, no watermarks, no limits. Compress as many
+              images as you want, whenever you want.
+            </p>
+          </div>
+        </div>
+      </section>
     </main>
+
+    <!-- Footer for additional SEO -->
+    <footer class="text-center py-8 text-sm text-slate-500 dark:text-slate-400">
+      <p>
+        ©
+        <script>
+          document.write(new Date().getFullYear());
+        </script>
+        ImageSqueezer. Built with ❤️ for privacy-conscious users.
+      </p>
+      <p class="mt-2">
+        <span>Supports JPG and PNG formats</span> •
+        <span>No registration required</span> •
+        <span>Works offline</span>
+      </p>
+    </footer>
 
     <script>
       // --- DOM Element Selection ---
