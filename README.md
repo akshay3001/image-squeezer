@@ -23,7 +23,7 @@ Try ImageSqueezer now: **[https://image-squeezer.vercel.app/](https://image-sque
 -   **🎯 Target Size Compression**: Choose from common target sizes (e.g., 25KB, 50KB, 100KB) perfect for web forms and uploads.
 -   **📝 Smart Naming**: Compressed files are automatically named `original-name-50kb.jpg`.
 -   **📱 Fully Responsive**: Works beautifully on both desktop and mobile devices.
--   - **♿ Accessible** - Built with web accessibility in mind
+-   **♿ Accessible** - Built with web accessibility in mind
 
 ***
 
