@@ -4,6 +4,8 @@ ImageSqueezer is a fast, free, and private client-side image compressor. It allo
 
 This project is built with simplicity in mind, using only HTML, Tailwind CSS, and vanilla JavaScript.
 
+Live - https://image-squeezer.vercel.app/
+
 ***
 
 ## Features
