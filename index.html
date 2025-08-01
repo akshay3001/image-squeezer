@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en" class="bg-slate-50 dark:bg-slate-900">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ImageSqueezer - Client-Side Image Compressor</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      /* Custom style for the file input button */
+      .file-input-button {
+        cursor: pointer;
+        border-radius: 0.5rem;
+        padding: 0.75rem 1.5rem;
+        background-color: #4f46e5; /* indigo-600 */
+        color: white;
+        transition: background-color 0.2s;
+      }
+      .file-input-button:hover {
+        background-color: #4338ca; /* indigo-700 */
+      }
+      #imageInput {
+        display: none;
+      }
+    </style>
+  </head>
+  <body class="font-sans text-slate-800 dark:text-slate-200">
+    <main class="container mx-auto max-w-4xl p-4 sm:p-8">
+      <header class="text-center mb-8">
+        <h1
+          class="text-4xl sm:text-5xl font-bold text-indigo-600 dark:text-indigo-400"
+        >
+          ImageSqueezer ✨
+        </h1>
+        <p class="mt-2 text-lg text-slate-600 dark:text-slate-400">
+          Compress JPG & PNG images right in your browser. No server upload
+          required.
+        </p>
+      </header>
+
+      <div class="bg-white dark:bg-slate-800 p-6 sm:p-8 rounded-xl shadow-lg">
+        <div class="mb-6 text-center">
+          <label for="imageInput" class="file-input-button">
+            📂 Select Image
+          </label>
+          <input type="file" id="imageInput" accept="image/jpeg, image/png" />
+          <p
+            id="fileInfo"
+            class="mt-3 text-sm text-slate-500 dark:text-slate-400"
+          >
+            Accepts JPG & PNG. Max file size: 5MB
+          </p>
+        </div>
+
+        <fieldset id="targetSizeOptions" class="mb-6 hidden">
+          <legend
+            class="text-center font-semibold text-lg mb-3 text-slate-700 dark:text-slate-300"
+          >
+            Choose a target size:
+          </legend>
+          <div class="flex justify-center flex-wrap gap-3">
+            <div>
+              <input
+                type="radio"
+                id="size25"
+                name="targetSize"
+                value="25"
+                class="hidden peer"
+              />
+              <label
+                for="size25"
+                class="block cursor-pointer select-none rounded-xl p-3 text-center peer-checked:bg-indigo-600 peer-checked:font-bold peer-checked:text-white ring-1 ring-slate-300 dark:ring-slate-600"
+                >25 KB</label
+              >
+            </div>
+            <div>
+              <input
+                type="radio"
+                id="size50"
+                name="targetSize"
+                value="50"
+                class="hidden peer"
+                checked
+              />
+              <label
+                for="size50"
+                class="block cursor-pointer select-none rounded-xl p-3 text-center peer-checked:bg-indigo-600 peer-checked:font-bold peer-checked:text-white ring-1 ring-slate-300 dark:ring-slate-600"
+                >50 KB</label
+              >
+            </div>
+            <div>
+              <input
+                type="radio"
+                id="size100"
+                name="targetSize"
+                value="100"
+                class="hidden peer"
+              />
+              <label
+                for="size100"
+                class="block cursor-pointer select-none rounded-xl p-3 text-center peer-checked:bg-indigo-600 peer-checked:font-bold peer-checked:text-white ring-1 ring-slate-300 dark:ring-slate-600"
+                >100 KB</label
+              >
+            </div>
+            <div>
+              <input
+                type="radio"
+                id="size250"
+                name="targetSize"
+                value="250"
+                class="hidden peer"
+              />
+              <label
+                for="size250"
+                class="block cursor-pointer select-none rounded-xl p-3 text-center peer-checked:bg-indigo-600 peer-checked:font-bold peer-checked:text-white ring-1 ring-slate-300 dark:ring-slate-600"
+                >250 KB</label
+              >
+            </div>
+          </div>
+        </fieldset>
+
+        <div class="text-center">
+          <button
+            id="compressBtn"
+            class="bg-indigo-600 text-white font-bold py-3 px-8 rounded-lg shadow-md hover:bg-indigo-700 disabled:bg-slate-400 disabled:cursor-not-allowed transition-all"
+            disabled
+          >
+            Compress Image
+          </button>
+        </div>
+      </div>
+
+      <div id="spinner" class="hidden text-center my-8">
+        <svg
+          class="animate-spin h-8 w-8 text-indigo-600 mx-auto"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+        >
+          <circle
+            class="opacity-25"
+            cx="12"
+            cy="12"
+            r="10"
+            stroke="currentColor"
+            stroke-width="4"
+          ></circle>
+          <path
+            class="opacity-75"
+            fill="currentColor"
+            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+          ></path>
+        </svg>
+        <p class="mt-2 text-slate-600 dark:text-slate-400">
+          Squeezing pixels... this may take a moment.
+        </p>
+      </div>
+
+      <div
+        id="results"
+        class="hidden mt-8 grid grid-cols-1 md:grid-cols-2 gap-8"
+      >
+        <div
+          class="bg-white dark:bg-slate-800 p-4 rounded-xl shadow-lg text-center"
+        >
+          <h3 class="text-xl font-bold mb-3 text-slate-700 dark:text-slate-300">
+            Original
+          </h3>
+          <img
+            id="originalPreview"
+            class="w-full h-auto rounded-lg mb-3 object-contain max-h-80"
+            alt="Original preview"
+          />
+          <p
+            id="originalSize"
+            class="font-mono text-slate-600 dark:text-slate-400"
+          ></p>
+        </div>
+
+        <div
+          class="bg-white dark:bg-slate-800 p-4 rounded-xl shadow-lg text-center"
+        >
+          <h3 class="text-xl font-bold mb-3 text-green-600 dark:text-green-400">
+            Compressed
+          </h3>
+          <img
+            id="compressedPreview"
+            class="w-full h-auto rounded-lg mb-3 object-contain max-h-80"
+            alt="Compressed preview"
+          />
+          <p
+            id="compressedSize"
+            class="font-mono text-slate-600 dark:text-slate-400"
+          ></p>
+          <a
+            id="downloadLink"
+            href="#"
+            download="compressed-image.jpg"
+            class="mt-4 inline-block bg-green-600 text-white font-bold py-2 px-6 rounded-lg hover:bg-green-700 transition-colors"
+          >
+            ⬇️ Download
+          </a>
+        </div>
+      </div>
+    </main>
+
+    <script>
+      // --- DOM Element Selection ---
+      const imageInput = document.getElementById("imageInput");
+      const fileInfo = document.getElementById("fileInfo");
+      const compressBtn = document.getElementById("compressBtn");
+      const targetSizeOptions = document.getElementById("targetSizeOptions");
+      const results = document.getElementById("results");
+      const spinner = document.getElementById("spinner");
+
+      const originalPreview = document.getElementById("originalPreview");
+      const originalSize = document.getElementById("originalSize");
+      const compressedPreview = document.getElementById("compressedPreview");
+      const compressedSize = document.getElementById("compressedSize");
+      const downloadLink = document.getElementById("downloadLink");
+
+      // --- State Variables ---
+      let originalImageDataURL = null;
+      let originalFileName = null;
+
+      // --- Event Listeners ---
+      imageInput.addEventListener("change", handleFileSelect);
+      compressBtn.addEventListener("click", handleCompress);
+
+      // --- Functions ---
+
+      /**
+       * Handles the user selecting a file.
+       * Validates the file and prepares the UI for compression.
+       */
+      function handleFileSelect(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+
+        // Validation
+        if (!["image/jpeg", "image/png"].includes(file.type)) {
+          alert("Error: Please select a JPG or PNG image.");
+          return;
+        }
+        if (file.size > 5 * 1024 * 1024) {
+          // 5MB
+          alert("Error: File size must be less than 5MB.");
+          return;
+        }
+
+        originalFileName = file.name; // Store the original file name
+
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          originalImageDataURL = e.target.result;
+          originalPreview.src = originalImageDataURL;
+          originalSize.textContent = `Size: ${(file.size / 1024).toFixed(
+            2
+          )} KB`;
+          fileInfo.textContent = `Selected: ${file.name}`;
+          compressBtn.disabled = false;
+          targetSizeOptions.classList.remove("hidden");
+          results.classList.add("hidden");
+        };
+        reader.readAsDataURL(file);
+      }
+
+      /**
+       * Orchestrates the compression process when the button is clicked.
+       */
+      async function handleCompress() {
+        if (!originalImageDataURL) return;
+
+        // UI updates for processing
+        spinner.classList.remove("hidden");
+        results.classList.add("hidden");
+        compressBtn.disabled = true;
+
+        const targetSizeKB = document.querySelector(
+          'input[name="targetSize"]:checked'
+        ).value;
+        const targetSizeBytes = targetSizeKB * 1024;
+
+        try {
+          const result = await compressImage(
+            originalImageDataURL,
+            targetSizeBytes
+          );
+
+          // Update UI with results
+          compressedPreview.src = result.dataURL;
+          const originalTotalSize = getDataUrlSize(originalImageDataURL);
+          const percentage = (
+            ((originalTotalSize - result.size) / originalTotalSize) *
+            100
+          ).toFixed(0);
+          compressedSize.textContent = `Final Size: ${(
+            result.size / 1024
+          ).toFixed(2)} KB (${percentage}% smaller)`;
+          downloadLink.href = result.dataURL;
+
+          // **NEW**: Create the dynamic download filename
+          const nameWithoutExtension = originalFileName
+            .split(".")
+            .slice(0, -1)
+            .join(".");
+          downloadLink.download = `${nameWithoutExtension}-${targetSizeKB}kb.jpg`;
+
+          results.classList.remove("hidden");
+        } catch (error) {
+          console.error("Compression failed:", error);
+          alert("An error occurred during compression. Please try again.");
+        } finally {
+          // UI cleanup
+          spinner.classList.add("hidden");
+          compressBtn.disabled = false;
+        }
+      }
+
+      /**
+       * The core compression logic using a binary search on JPEG quality.
+       * @param {string} imageDataURL - The base64 data URL of the source image.
+       * @param {number} targetSizeBytes - The desired file size in bytes.
+       * @returns {Promise<{dataURL: string, size: number}>} - The compressed image data and its final size.
+       */
+      function compressImage(imageDataURL, targetSizeBytes) {
+        return new Promise((resolve, reject) => {
+          const img = new Image();
+          img.onload = () => {
+            const canvas = document.createElement("canvas");
+            const ctx = canvas.getContext("2d");
+            canvas.width = img.width;
+            canvas.height = img.height;
+            ctx.drawImage(img, 0, 0);
+
+            let minQuality = 0;
+            let maxQuality = 1;
+            let currentQuality;
+
+            // Perform about 7 iterations for a good balance of speed and accuracy
+            for (let i = 0; i < 7; i++) {
+              currentQuality = (minQuality + maxQuality) / 2;
+              const currentDataURL = canvas.toDataURL(
+                "image/jpeg",
+                currentQuality
+              );
+              const currentSize = getDataUrlSize(currentDataURL);
+
+              if (currentSize > targetSizeBytes) {
+                maxQuality = currentQuality;
+              } else {
+                minQuality = currentQuality;
+              }
+            }
+
+            // Final compression with the best quality that is under the target size
+            const finalDataURL = canvas.toDataURL("image/jpeg", minQuality);
+            const finalSize = getDataUrlSize(finalDataURL);
+
+            resolve({ dataURL: finalDataURL, size: finalSize });
+          };
+          img.onerror = reject;
+          img.src = imageDataURL;
+        });
+      }
+
+      /**
+       * Calculates the byte size of a base64 data URL.
+       * @param {string} dataURL - The data URL to measure.
+       * @returns {number} - The size in bytes.
+       */
+      function getDataUrlSize(dataURL) {
+        if (!dataURL) return 0;
+        // The Base64 string is the part after the comma
+        const base64 = dataURL.split(",")[1];
+        if (!base64) return 0;
+        // The actual file size is approximately 3/4 of the Base64 string length
+        return Math.round(base64.length * 0.75);
+      }
+    </script>
+  </body>
+</html>
